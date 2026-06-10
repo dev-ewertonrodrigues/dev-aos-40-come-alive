@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "@/assets/devaos40.png.asset.json";
 import "@/styles/devaos40.css";
 
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Dev aos 40 é o projeto pessoal sobre começar (ou recomeçar) na programação na maturidade. Artigos, tutoriais e desabafos de quem virou dev depois dos 40.",
+          "Dev aos 40 é o projeto pessoal sobre começar (ou recomeçar) na programação na maturidade.",
       },
       { property: "og:title", content: "Dev aos 40" },
       {
@@ -24,10 +24,50 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const NAV = ["Início", "Artigos", "Tutoriais", "Sobre", "Contato"];
+type NavItem = { label: string; href: string; children?: { label: string; href: string }[] };
+
+const NAV: NavItem[] = [
+  { label: "Início", href: "#inicio" },
+  {
+    label: "Artigos",
+    href: "#artigos",
+    children: [
+      { label: "Carreira", href: "#carreira" },
+      { label: "Reflexões", href: "#reflexoes" },
+      { label: "Produtividade", href: "#produtividade" },
+    ],
+  },
+  {
+    label: "Tutoriais",
+    href: "#tutoriais",
+    children: [
+      { label: "HTML & CSS", href: "#html" },
+      { label: "JavaScript", href: "#js" },
+      { label: "TypeScript", href: "#ts" },
+      { label: "Git & GitHub", href: "#git" },
+    ],
+  },
+  { label: "Sobre", href: "#sobre" },
+  { label: "Contato", href: "#contato" },
+];
+
+type Variant = "classic" | "mega" | "underline";
 
 function Index() {
   const [active, setActive] = useState("Início");
+  const [variant, setVariant] = useState<Variant>("classic");
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSub, setMobileSub] = useState<string | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   return (
     <div className="d40-page">
@@ -38,11 +78,7 @@ function Index() {
           </div>
           <div className="d40-header__row">
             <div className="d40-header__brand">
-              <img
-                src={logo.url}
-                alt="Logo do projeto Dev aos 40"
-                className="d40-header__logo"
-              />
+              <img src={logo.url} alt="Logo do projeto Dev aos 40" className="d40-header__logo" />
               <h1 className="d40-header__title">Dev aos 40</h1>
             </div>
             <p className="d40-header__tagline">
@@ -53,30 +89,117 @@ function Index() {
           </div>
         </header>
 
-        <nav className="d40-nav" aria-label="Principal">
-          {NAV.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className={active === item ? "is-active" : ""}
-              onClick={(e) => {
-                e.preventDefault();
-                setActive(item);
-              }}
+        {/* Variant switcher (demo) */}
+        <div className="d40-variant-switch" role="tablist" aria-label="Estilo do menu">
+          <span className="d40-variant-switch__label">Estilo do menu:</span>
+          {(["classic", "mega", "underline"] as Variant[]).map((v) => (
+            <button
+              key={v}
+              type="button"
+              role="tab"
+              aria-selected={variant === v}
+              className={variant === v ? "is-on" : ""}
+              onClick={() => { setVariant(v); setOpenMenu(null); }}
             >
-              {item}
-            </a>
+              {v === "classic" ? "Clássico" : v === "mega" ? "Mega Menu" : "Minimal"}
+            </button>
           ))}
-        </nav>
+        </div>
+
+        <div className={`d40-navwrap d40-navwrap--${variant}`} ref={navRef}>
+          {/* Mobile bar */}
+          <div className="d40-navbar-mobile">
+            <span className="d40-navbar-mobile__brand">Menu</span>
+            <button
+              type="button"
+              className={`d40-burger ${mobileOpen ? "is-open" : ""}`}
+              aria-label="Abrir menu"
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((v) => !v)}
+            >
+              <span /><span /><span />
+            </button>
+          </div>
+
+          <nav
+            className={`d40-nav d40-nav--${variant} ${mobileOpen ? "is-mobile-open" : ""}`}
+            aria-label="Principal"
+          >
+            {NAV.map((item) => {
+              const hasChildren = !!item.children?.length;
+              const isOpen = openMenu === item.label;
+              return (
+                <div
+                  key={item.label}
+                  className={`d40-nav__item ${hasChildren ? "has-children" : ""} ${isOpen ? "is-open" : ""}`}
+                  onMouseEnter={() => hasChildren && variant !== "mega" && setOpenMenu(item.label)}
+                  onMouseLeave={() => hasChildren && variant !== "mega" && setOpenMenu(null)}
+                >
+                  <a
+                    href={item.href}
+                    className={active === item.label ? "is-active" : ""}
+                    aria-haspopup={hasChildren || undefined}
+                    aria-expanded={hasChildren ? isOpen : undefined}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActive(item.label);
+                      if (hasChildren) {
+                        setOpenMenu(isOpen ? null : item.label);
+                        setMobileSub(mobileSub === item.label ? null : item.label);
+                      } else {
+                        setOpenMenu(null);
+                        setMobileOpen(false);
+                      }
+                    }}
+                  >
+                    {item.label}
+                    {hasChildren && <span className="d40-caret" aria-hidden="true">▾</span>}
+                  </a>
+
+                  {hasChildren && (
+                    <div
+                      className={`d40-submenu ${isOpen || mobileSub === item.label ? "is-open" : ""}`}
+                      role="menu"
+                    >
+                      {variant === "mega" && (
+                        <div className="d40-submenu__intro">
+                          <strong>{item.label}</strong>
+                          <span>Explore conteúdos sobre {item.label.toLowerCase()}.</span>
+                        </div>
+                      )}
+                      <ul>
+                        {item.children!.map((c) => (
+                          <li key={c.label}>
+                            <a
+                              href={c.href}
+                              role="menuitem"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setOpenMenu(null);
+                                setMobileOpen(false);
+                              }}
+                            >
+                              {c.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+        </div>
 
         <main className="d40-main">
           <section className="d40-col">
             <h2>Começando aos quarenta</h2>
             <p>
               Este é o diário de bordo de quem decidiu mudar de carreira e
-              encarar a programação na maturidade. Aqui registro o que
-              aprendo, o que erro e o que me motiva a continuar — sem mágica,
-              sem fórmula pronta, só{" "}
+              encarar a programação na maturidade. Aqui registro o que aprendo,
+              o que erro e o que me motiva a continuar — sem mágica, sem
+              fórmula pronta, só{" "}
               <a href="#consistencia" className="inline">consistência</a> e{" "}
               <a href="#curiosidade" className="inline">curiosidade</a>.
             </p>
@@ -87,15 +210,9 @@ function Index() {
 
             <dl className="d40-deflist">
               <dt>Por quê</dt>
-              <dd>
-                Porque trocar de área aos 40 é assustador, mas também é o
-                projeto mais honesto que já encarei.
-              </dd>
+              <dd>Porque trocar de área aos 40 é assustador, mas também é o projeto mais honesto que já encarei.</dd>
               <dt>Como</dt>
-              <dd>
-                Estudando todos os dias, publicando o que aprendo e
-                conversando com quem está na mesma estrada.
-              </dd>
+              <dd>Estudando todos os dias, publicando o que aprendo e conversando com quem está na mesma estrada.</dd>
             </dl>
 
             <div className="d40-footnote">
@@ -121,9 +238,8 @@ function Index() {
                 <div className="d40-card__thumb">FOTO</div>
                 <div className="d40-card__body">
                   <p>
-                    A história de uma transição de carreira que começou com
-                    uma planilha de Excel e terminou no primeiro pull request
-                    aceito. Spoiler: deu certo, mas demorou.
+                    A história de uma transição de carreira que começou com uma
+                    planilha de Excel e terminou no primeiro pull request aceito.
                   </p>
                 </div>
               </div>
@@ -134,15 +250,13 @@ function Index() {
               <h3 className="d40-card__title">Bastidores</h3>
               <p style={{ fontSize: "0.9rem", color: "var(--d40-text-soft)" }}>
                 Como é montar uma rotina de estudos quando você tem filhos,
-                trabalho integral e cansaço acumulado. Spoiler 2: não envolve
-                acordar às 5 da manhã.
+                trabalho integral e cansaço acumulado.
               </p>
             </article>
 
             <div className="d40-callout">
               <div className="d40-callout__msg">
-                Receba os próximos posts direto no seu e-mail, sem spam e sem
-                conversa fiada.
+                Receba os próximos posts direto no seu e-mail, sem spam e sem conversa fiada.
               </div>
               <button
                 type="button"
@@ -160,8 +274,7 @@ function Index() {
                 <div className="d40-card__body">
                   <p>
                     Um tour pela mesa, pelos cadernos rabiscados e pelas
-                    ferramentas que mais uso no dia a dia de quem está
-                    aprendendo a programar.
+                    ferramentas que mais uso no dia a dia.
                   </p>
                 </div>
               </div>
@@ -174,9 +287,7 @@ function Index() {
         <footer className="d40-footer">
           <nav aria-label="Rodapé">
             {NAV.map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`}>
-                {item}
-              </a>
+              <a key={item.label} href={item.href}>{item.label}</a>
             ))}
           </nav>
           <span className="d40-footer__copy">

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import logo from "@/assets/devaos40.png.asset.json";
+import logo from "@/assets/devaos40.png";
 import "@/css/devaos40.css";
 
 export const Route = createFileRoute("/")({
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
         content:
           "Programar é para todas as idades. Acompanhe a jornada de virar dev depois dos 40.",
       },
-      { property: "og:image", content: logo.url },
+      { property: "og:image", content: logo },
     ],
   }),
   component: Index,
@@ -78,7 +78,7 @@ function Index() {
           </div>
           <div className="d40-header__row">
             <div className="d40-header__brand">
-              <img src={logo.url} alt="Logo do projeto Dev aos 40" className="d40-header__logo" />
+              <img src={logo} alt="Logo do projeto Dev aos 40" className="d40-header__logo" />
               <h1 className="d40-header__title">Dev aos 40</h1>
             </div>
             <p className="d40-header__tagline">

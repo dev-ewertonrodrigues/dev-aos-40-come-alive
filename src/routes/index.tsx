@@ -116,8 +116,8 @@ function Index() {
                 <div
                   key={item.label}
                   className={`d40-nav__item ${hasChildren ? "has-children" : ""} ${isOpen ? "is-open" : ""}`}
-                  onMouseEnter={() => hasChildren && variant !== "mega" && setOpenMenu(item.label)}
-                  onMouseLeave={() => hasChildren && variant !== "mega" && setOpenMenu(null)}
+                  onMouseEnter={() => hasChildren && setOpenMenu(item.label)}
+                  onMouseLeave={() => hasChildren && setOpenMenu(null)}
                 >
                   <a
                     href={item.href}
@@ -145,12 +145,7 @@ function Index() {
                       className={`d40-submenu ${isOpen || mobileSub === item.label ? "is-open" : ""}`}
                       role="menu"
                     >
-                      {variant === "mega" && (
-                        <div className="d40-submenu__intro">
-                          <strong>{item.label}</strong>
-                          <span>Explore conteúdos sobre {item.label.toLowerCase()}.</span>
-                        </div>
-                      )}
+
                       <ul>
                         {item.children!.map((c) => (
                           <li key={c.label}>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev aos 40 — Programar é para todas as idades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- CSS Paths relative to preview.html -->
+  <link rel="stylesheet" href="./src/css/styles.css">
+  <link rel="stylesheet" href="./src/css/devaos40.css">
+</head>
+<body class="dark" style="margin: 0; background-color: #000; color: #fff; font-family: 'Inter', sans-serif;">
+  <div class="d40-page">
+    <div class="d40-shell">
+      <header class="d40-header">
+        <div class="d40-header__strip" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span class="flex"></span>
+        </div>
+        <div class="d40-header__row">
+          <div class="d40-header__brand">
+            <img src="https://placehold.co/40x40/222/FFF?text=D40" alt="Logo do projeto Dev aos 40" class="d40-header__logo" />
+            <h1 class="d40-header__title">Dev aos 40</h1>
+          </div>
+          <p class="d40-header__tagline">
+            Programar é para<br>todas as idades
+          </p>
+        </div>
+      </header>
+
+      <div class="d40-navwrap d40-navwrap--underline">
+        <!-- Mobile bar -->
+        <div class="d40-navbar-mobile">
+          <span class="d40-navbar-mobile__brand">Menu</span>
+          <button type="button" class="d40-burger" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+        <nav class="d40-nav d40-nav--underline" aria-label="Principal">
+          <div class="d40-nav__item"><a href="#inicio" class="is-active">Início</a></div>
+          <div class="d40-nav__item has-children">
+            <a href="#artigos" aria-haspopup="true">Artigos <span class="d40-caret" aria-hidden="true">▾</span></a>
+          </div>
+          <div class="d40-nav__item has-children">
+            <a href="#tutoriais" aria-haspopup="true">Tutoriais <span class="d40-caret" aria-hidden="true">▾</span></a>
+          </div>
+          <div class="d40-nav__item"><a href="#sobre">Sobre</a></div>
+          <div class="d40-nav__item"><a href="#contato">Contato</a></div>
+        </nav>
+      </div>
+
+      <main class="d40-main">
+        <section class="d40-col">
+          <h2>Começando aos quarenta</h2>
+          <p>Este é o diário de bordo de quem decidiu mudar de carreira e encarar a programação na maturidade. Aqui registro o que aprendo, o que erro e o que me motiva a continuar — sem mágica, sem fórmula pronta, só <a href="#consistencia" class="inline">consistência</a> e <a href="#curiosidade" class="inline">curiosidade</a>.</p>
+          <p>A ideia é construir uma trilha real, com prazos reais e dúvidas reais. Tudo o que eu queria ter encontrado quando comecei.</p>
+          
+          <dl class="d40-deflist">
+            <dt>Por quê</dt>
+            <dd>Porque trocar de área aos 40 é assustador, mas também é o projeto mais honesto que já encarei.</dd>
+            <dt>Como</dt>
+            <dd>Estudando todos os dias, publicando o que aprendo e conversando com quem está na mesma estrada.</dd>
+          </dl>
+
+          <div class="d40-footnote">
+            <div class="d40-footnote__icon" aria-hidden="true">⏱</div>
+            <div>
+              <h3>Últimas atualizações</h3>
+              <ul>
+                <li><a href="#post-1">Meu primeiro deploy em produção</a></li>
+                <li><a href="#post-2">Aprendendo TypeScript do zero</a></li>
+                <li><a href="#post-3">Como organizo meus estudos diários</a></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <div class="d40-divider" aria-hidden="true"></div>
+
+        <section class="d40-col">
+          <article class="d40-card">
+            <h3 class="d40-card__title">Em destaque</h3>
+            <h4 style="margin: 0 0 8px">De analista a desenvolvedor</h4>
+            <div class="d40-card__media">
+              <div class="d40-card__thumb">FOTO</div>
+              <div class="d40-card__body">
+                <p>A história de uma transição de carreira que começou com uma planilha de Excel e terminou no primeiro pull request aceito.</p>
+              </div>
+            </div>
+            <a class="d40-card__more" href="#leia-mais">Ler mais »</a>
+          </article>
+
+          <article class="d40-card">
+            <h3 class="d40-card__title">Bastidores</h3>
+            <p style="font-size: 0.9rem; color: var(--d40-text-soft)">Como é montar uma rotina de estudos quando você tem filhos, trabalho integral e cansaço acumulado.</p>
+          </article>
+
+          <div class="d40-callout">
+            <div class="d40-callout__msg">Receba os próximos posts direto no seu e-mail, sem spam e sem conversa fiada.</div>
+            <button type="button" class="d40-callout__btn">Assinar »</button>
+          </div>
+
+          <article class="d40-card">
+            <h3 class="d40-card__title">No estúdio</h3>
+            <div class="d40-card__media">
+              <div class="d40-card__thumb">SETUP</div>
+              <div class="d40-card__body">
+                <p>Um tour pela mesa, pelos cadernos rabiscados e pelas ferramentas que mais uso no dia a dia.</p>
+              </div>
+            </div>
+            <a class="d40-card__more" href="#tour">Ler mais »</a>
+          </article>
+        </section>
+      </main>
+
+      <div class="d40-subfoot" aria-hidden="true"></div>
+      <footer class="d40-footer">
+        <nav aria-label="Rodapé">
+          <a href="#inicio">Início</a>
+          <a href="#artigos">Artigos</a>
+          <a href="#tutoriais">Tutoriais</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <span class="d40-footer__copy">© 2026 Dev aos 40 — projeto pessoal</span>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

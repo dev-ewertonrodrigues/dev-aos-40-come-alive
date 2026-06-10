@@ -200,8 +200,8 @@ function Index() {
                 <h3>Últimas atualizações</h3>
                 <ul>
                   <li><a href="#post-1">Meu primeiro deploy em produção</a></li>
-                  <li><a href="#post-2">Aprendendo TypeScript do zero</a></li>
-                  <li><a href="#post-3">Como organizo meus estudos diários</a></li>
+                  <li><a href="#post-2">Aprendendo Java do Zero</a></li>
+                  <li><a href="#post-3">Como dividir estudos, trabalho e família</a></li>
                 </ul>
               </div>
             </div>

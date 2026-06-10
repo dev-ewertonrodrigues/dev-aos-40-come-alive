@@ -1,19 +1,19 @@
 /* Dev aos 40 — dark theme tech */
 :root {
-  --d40-blue: #3b5bff;
-  --d40-blue-dark: #1c2a6b;
-  --d40-purple: #7c4dff;
-  --d40-purple-dark: #2e1a66;
-  --d40-gold: #d9a51b;
-  --d40-gold-soft: #f1c869;
-  --d40-bg-page: #0b0c15;
-  --d40-bg-shell: #12131f;
-  --d40-bg-card: #1a1b2e;
-  --d40-bg-elevated: #22233a;
-  --d40-text: #e8e6f0;
-  --d40-text-soft: #9a96b8;
-  --d40-link: #8aa4ff;
-  --d40-divider: rgba(123, 77, 255, 0.25);
+  --d40-blue: #0077ff;
+  --d40-blue-dark: #0a2540;
+  --d40-purple: #00f0ff;
+  --d40-purple-dark: #09182b;
+  --d40-gold: #00f0ff;
+  --d40-gold-soft: #7efaff;
+  --d40-bg-page: #070a12;
+  --d40-bg-shell: #0d1117;
+  --d40-bg-card: #111820;
+  --d40-bg-elevated: #161f2a;
+  --d40-text: #e6f1ff;
+  --d40-text-soft: #8b9bb4;
+  --d40-link: #00f0ff;
+  --d40-divider: rgba(0, 240, 255, 0.18);
 }
 
 * { box-sizing: border-box; }

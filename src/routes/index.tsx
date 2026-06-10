@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import logo from "@/assets/devaos40.png.asset.json";
-import "@/styles/devaos40.css";
+import "@/css/devaos40.css";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,7 +55,7 @@ type Variant = "classic" | "mega" | "underline";
 
 function Index() {
   const [active, setActive] = useState("Início");
-  const [variant, setVariant] = useState<Variant>("classic");
+  const variant = "underline";
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSub, setMobileSub] = useState<string | null>(null);
@@ -89,22 +89,6 @@ function Index() {
           </div>
         </header>
 
-        {/* Variant switcher (demo) */}
-        <div className="d40-variant-switch" role="tablist" aria-label="Estilo do menu">
-          <span className="d40-variant-switch__label">Estilo do menu:</span>
-          {(["classic", "mega", "underline"] as Variant[]).map((v) => (
-            <button
-              key={v}
-              type="button"
-              role="tab"
-              aria-selected={variant === v}
-              className={variant === v ? "is-on" : ""}
-              onClick={() => { setVariant(v); setOpenMenu(null); }}
-            >
-              {v === "classic" ? "Clássico" : v === "mega" ? "Mega Menu" : "Minimal"}
-            </button>
-          ))}
-        </div>
 
         <div className={`d40-navwrap d40-navwrap--${variant}`} ref={navRef}>
           {/* Mobile bar */}
